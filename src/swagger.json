@@ -1,0 +1,166 @@
+{  
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Cadastro de usuários",
+    "description": "API de cadastro de usuários",
+    "version": "1.0.0",
+    "contact": {
+      "email":"victorsmello93@gmail.com"
+    }
+  },
+  "paths":{
+    "/users":{
+      "post":{
+        "tags": ["User"],
+        "summary": "Criar usuário",
+        "description": "Criar um novo usuário",
+        "requestBody":{
+          "content":{
+            "application/json":{
+              "schema":{
+                "$ref": "#/components/schemas/User"                                
+              },
+              "examples": {
+                "users": {
+                  "value": {
+                    "name": "Fulano de tal",
+                    "email": "emaildofulano@gmail.com"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário cadastrado com sucesso."
+          },
+          "400": {
+            "description": "Já existe um usuário com e-mail cadastrado."
+          }
+        }
+      },
+      "get": {
+        "tags": ["User"],
+        "summary": "Consulta de usuários",
+        "description": "Lista todos os usuários do sistema",
+        "parameters": [
+          {
+           "in": "header",
+           "name": "user_id",
+           "description": "Id do usuário responsável pela listagem dos usuários do sistema.",
+           "type": "string",
+           "required": true
+         }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuários listados com sucesso",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário não existe / Usuário não é administrador"
+          }
+        }
+      }      
+    },
+    "/users/{user_id}/admin":{
+      "patch": {
+        "tags": ["User"],
+        "summary": "Definir usuário como administrador",
+        "description": "Definir usuário como administrador",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "Id do usuário que será administrador.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso."            
+          },
+          "404": {
+            "description": "Usuário não existe."
+          }
+        }
+      }
+    },
+    "/users/{user_id}":{
+      "get": {
+        "tags": ["User"],
+        "summary": "Buscar usuário pelo id",
+        "description": "Buscar usuário pelo id",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "user_id",
+            "description": "Id do usuário a ser buscado.",
+            "type": "string",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado."            
+          },
+          "404": {
+            "description": "Usuário não existe."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Id do usuário"
+          },
+          "name": {
+            "type": "string",
+            "description": "Nome do usuário"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email do usuário"
+          },
+          "admin": {
+            "type": "boolean",
+            "description": "Usuário é administrador? Sim (true) - Não (false)"
+          },
+          "created_at": {
+            "type": "string",
+            "description": "Data de cadastro no formato YYYY-MM-DD HH:mm:ss"
+          },
+          "updated_at": {
+            "type": "string",
+            "description": "Data de atualização no formato YYYY-MM-DD HH:mm:ss"
+          }          
+        }
+      }
+    }
+  }
+}
