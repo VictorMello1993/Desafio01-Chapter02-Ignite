@@ -33,7 +33,15 @@
         },
         "responses": {
           "201": {
-            "description": "Usuário cadastrado com sucesso."
+            "description": "Usuário cadastrado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
           },
           "400": {
             "description": "Já existe um usuário com e-mail cadastrado."
@@ -43,7 +51,7 @@
       "get": {
         "tags": ["User"],
         "summary": "Consulta de usuários",
-        "description": "Lista todos os usuários do sistema",
+        "description": "Somente usuários administradores que podem acessar o recurso.",
         "parameters": [
           {
            "in": "header",
@@ -59,18 +67,8 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "name": {
-                        "type": "string"
-                      },
-                      "email": {
-                        "type": "string"
-                      }
-                    }
-                  }
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -97,7 +95,15 @@
         ],
         "responses": {
           "200": {
-            "description": "Usuário atualizado com sucesso."            
+            "description": "Usuário atualizado com sucesso.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }         
           },
           "404": {
             "description": "Usuário não existe."
@@ -121,7 +127,15 @@
         ],
         "responses": {
           "200": {
-            "description": "Usuário encontrado."            
+            "description": "Usuário encontrado.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }      
           },
           "404": {
             "description": "Usuário não existe."
